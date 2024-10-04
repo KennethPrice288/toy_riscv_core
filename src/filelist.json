@@ -1,0 +1,13 @@
+{
+    "top": "cpu.sv",
+    "files":
+    [
+    "src/cpu/cpu.sv",
+    "src/cpu/register_file.sv",
+    "components/dff.sv",
+    "components/inv.sv",
+    "components/nonsynth_clock_gen.sv",
+    "components/nonsynth_reset_gen.sv",
+    "src/testbench.sv"
+    ]
+}
