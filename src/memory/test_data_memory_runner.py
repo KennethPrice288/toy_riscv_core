@@ -44,6 +44,7 @@ def run_tests():
         runner.test(
             hdl_toplevel="data_memory",
             test_module="data_memory_tb",
+            waves=True,
         )
     else:  # verilator
         vcd_file = proj_path / "dm_sim_build" / "dump.vcd"
@@ -55,7 +56,7 @@ def run_tests():
                 f"+incdir+{proj_path}/src/memory",
                 "--relative-includes",
                 "--trace",
-                "--trace-structs",
+                "--trace-structs"
             ],
             parameters=common_parameters,
             build_dir="dm_sim_build",
@@ -64,6 +65,7 @@ def run_tests():
         runner.test(
             hdl_toplevel="data_memory",
             test_module="data_memory_tb",
+            waves=True
         )
         
         # Check if VCD file was created
