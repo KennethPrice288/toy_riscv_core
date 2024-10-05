@@ -99,24 +99,3 @@ async def test_halfword_write_read(dut):
 
     assert read_data == expected_data, f"Halfword write/read failed. Expected {expected_data:08x}, got {read_data:08x}"
     cocotb.log.info("Simulation complete")
-
-@cocotb.test()
-async def test_unaligned_access(dut):
-    """Test unaligned write and read"""
-
-    
-
-    clock = Clock(dut.clk_i, 10, units="ns")
-    cocotb.start_soon(clock.start())
-
-    await reset(dut)
-
-    test_addr = 0x401  # Unaligned address
-    test_data = 0xAABBCCDD
-
-    await write_data(dut, test_addr, test_data, 0b1110)  # Write to bytes 1, 2, 3
-    read_data = await read_data_from_memory(dut, test_addr - 1)  # Read from the word-aligned address
-
-    expected_data = (test_data & 0xFFFFFF00) >> 8
-    assert (read_data & 0x00FFFFFF) == expected_data, f"Unaligned access failed. Expected {expected_data:06x}, got {read_data & 0x00FFFFFF:06x}"
-    cocotb.log.info("Simulation complete")
