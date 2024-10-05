@@ -48,19 +48,3 @@ async def test_register_file(dut):
 
     dut._log.info("Test completed")
 
-if __name__ == "__main__":
-    _DIR_PATH = os.path.dirname(os.path.abspath(__file__))
-    rtl_dir = os.path.abspath(os.path.join(_DIR_PATH, '..'))
-    
-    verilog_sources = [
-        os.path.join(rtl_dir, "cpu", "register_file.sv"),
-        os.path.join(_DIR_PATH, "register_file_testbench.sv"),
-    ]
-
-    run(
-        verilog_sources=verilog_sources,
-        toplevel="testbench",
-        module=os.path.splitext(os.path.basename(__file__))[0],
-        sim_build=os.path.join(rtl_dir, "sim_build"),
-        simulator="icarus",
-    )
