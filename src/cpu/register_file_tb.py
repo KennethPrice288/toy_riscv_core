@@ -17,13 +17,10 @@ async def test_register_file(dut):
 
     # Write to register 1
     dut._log.info("Writing 0xDEADBEEF to register 1")
-    dut.valid_i.value = 1
-    dut.ready_i.value = 0  # Ensure ready_i is driven correctly
     dut.rd_addr.value = 1
     dut.rd_data.value = 0xDEADBEEF
     dut.wr_en.value = 1
     await RisingEdge(dut.clk_i)
-    dut.valid_i.value = 0
     dut.wr_en.value = 0
     await RisingEdge(dut.clk_i)
 
@@ -33,20 +30,12 @@ async def test_register_file(dut):
 
     # Read from register 1
     dut._log.info("Reading from register 1")
-    dut.valid_i.value = 1
     dut.rs1_addr.value = 1
     await RisingEdge(dut.clk_i)
-    dut.valid_i.value = 0
-
-    # Wait a few cycles to ensure the read operation completes
-    for _ in range(2):
-        await RisingEdge(dut.clk_i)
 
     # Debug: Print all signals
     dut._log.info(f"rs1_addr: {dut.rs1_addr.value}")
     dut._log.info(f"rs1_data: {dut.rs1_data.value}")
-    dut._log.info(f"valid_o: {dut.valid_o.value}")
-    dut._log.info(f"ready_o: {dut.ready_o.value}")
 
     # Attempt to read the value
     try:
