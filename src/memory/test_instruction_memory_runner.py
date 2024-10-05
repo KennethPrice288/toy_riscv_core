@@ -38,6 +38,13 @@ def run_tests():
                 f"-I{proj_path}/src/memory",
             ],
             parameters=common_parameters,
+            build_dir="im_sim_build",  # Add this line
+            waves=True
+        )
+        runner.test(  # Move this inside the if block
+            hdl_toplevel="instruction_memory",
+            test_module="instruction_memory_tb",
+            waves=True
         )
     else:  # verilator
         runner.build(
@@ -47,16 +54,18 @@ def run_tests():
                 f"+incdir+{proj_path}/components",
                 f"+incdir+{proj_path}/src/memory",
                 "--relative-includes",
+                "--trace",  # Add this line
+                "--trace-structs"  # Add this line
             ],
             parameters=common_parameters,
-            build_dir="im_sim_build"
+            build_dir="im_sim_build",
+            waves=True
         )
-
-    # Run the tests
-    runner.test(
-        hdl_toplevel="instruction_memory",
-        test_module="instruction_memory_tb",
-    )
+        runner.test(  # Move this inside the else block
+            hdl_toplevel="instruction_memory",
+            test_module="instruction_memory_tb",
+            waves=True
+        )
 
 if __name__ == "__main__":
     run_tests()
