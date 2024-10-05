@@ -47,7 +47,6 @@ def run_tests():
             waves=True,
         )
     else:  # verilator
-        vcd_file = proj_path / "dm_sim_build" / "dump.vcd"
         runner.build(
             verilog_sources=sources,
             hdl_toplevel="data_memory",
