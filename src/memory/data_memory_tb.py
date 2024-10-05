@@ -52,6 +52,7 @@ async def test_full_word_write_read(dut):
     read_data = await read_data_from_memory(dut, test_addr)
 
     assert read_data == test_data, f"Full word write/read failed. Expected {test_data:08x}, got {read_data:08x}"
+    cocotb.log.info("Simulation complete")
 
 @cocotb.test()
 async def test_byte_write_read(dut):
@@ -74,6 +75,7 @@ async def test_byte_write_read(dut):
     expected_data = sum(byte << (8 * i) for i, byte in enumerate(test_bytes))
 
     assert read_data == expected_data, f"Byte write/read failed. Expected {expected_data:08x}, got {read_data:08x}"
+    cocotb.log.info("Simulation complete")
 
 @cocotb.test()
 async def test_halfword_write_read(dut):
@@ -96,6 +98,7 @@ async def test_halfword_write_read(dut):
     expected_data = sum(halfword << (16 * i) for i, halfword in enumerate(test_halfwords))
 
     assert read_data == expected_data, f"Halfword write/read failed. Expected {expected_data:08x}, got {read_data:08x}"
+    cocotb.log.info("Simulation complete")
 
 @cocotb.test()
 async def test_unaligned_access(dut):
@@ -116,3 +119,4 @@ async def test_unaligned_access(dut):
 
     expected_data = (test_data & 0xFFFFFF00) >> 8
     assert (read_data & 0x00FFFFFF) == expected_data, f"Unaligned access failed. Expected {expected_data:06x}, got {read_data & 0x00FFFFFF:06x}"
+    cocotb.log.info("Simulation complete")
