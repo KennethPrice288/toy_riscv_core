@@ -4,6 +4,8 @@
     [
     "src/cpu/cpu.sv",
     "src/cpu/register_file.sv",
+    "src/cpu/alu.sv",
+    "src/cpu/alu_pkg.sv",
     "components/dff.sv",
     "components/inv.sv",
     "components/nonsynth_clock_gen.sv",
