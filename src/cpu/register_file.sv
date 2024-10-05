@@ -6,10 +6,10 @@ module register_file
     input clk_i,
     input rst_i,
 
-    input logic [$clog2(width_p) - 1:0] rs1_addr,
-    input logic [$clog2(width_p) - 1:0] rs2_addr,
+    input logic [$clog2(depth_p)-1:0] rs1_addr,
+    input logic [$clog2(depth_p)-1:0] rs2_addr,
 
-    input logic [4:0] rd_addr,
+    input logic [$clog2(depth_p)-1:0] rd_addr,
     input logic [width_p - 1:0] rd_data,
 
     input logic wr_en,
@@ -20,8 +20,6 @@ module register_file
 
     // Register file storage
     logic [width_p - 1:0] registers [depth_p];
-
-    logic [width_p - 1:0] rs1_data_internal, rs2_data_internal;
 
     always_ff @(posedge clk_i) begin
         //positive reset sets all registers to 0
@@ -34,7 +32,7 @@ module register_file
         end
     end
     
-    //Combinational reads
+    // Combinational reads
     always_comb begin
         rs1_data = registers[rs1_addr];
         rs2_data = registers[rs2_addr];

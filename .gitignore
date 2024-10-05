@@ -2,9 +2,11 @@
 __pycache__/
 *.pyc
 *.pyo
+.pytest_cache
+
 
 # Ignore virtual environment
-venv/
+.venv/
 
 # Ignore build artifacts
 sim_build/

@@ -6,6 +6,8 @@
     "src/cpu/register_file.sv",
     "src/cpu/alu.sv",
     "src/cpu/alu_pkg.sv",
+    "src/memory/instruction_memory.sv",
+    "components/ram_1r1w_sync.sv",
     "components/dff.sv",
     "components/inv.sv",
     "components/nonsynth_clock_gen.sv",

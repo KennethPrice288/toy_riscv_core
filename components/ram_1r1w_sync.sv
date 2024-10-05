@@ -1,3 +1,4 @@
+`timescale 1ps/1ps
 `ifndef BINPATH
  `define BINPATH ""
 `endif
@@ -17,12 +18,11 @@ module ram_1r1w_sync
 
   logic [width_p-1:0] mem[depth_p-1:0];
 
-   initial begin
-      // Display depth and width (You will need to match these in your init file)
-      $display("%m: depth_p is %d, width_p is %d", depth_p, width_p);
-      // for (int i = 0; i < depth_p; i++)
-        // $dumpvars(0,mem[i]);
-   end
+  //  initial begin
+  //     $display("%m: depth_p is %d, width_p is %d", depth_p, width_p);
+  //     for (int i = 0; i < depth_p; i++)
+  //       $dumpvars(0,mem[i]);
+  //  end
 
    reg [width_p-1:0] rd_data_r;
 
@@ -41,7 +41,7 @@ module ram_1r1w_sync
     end
    end
    //output a read data register, not the data directly
-   //this is what makes it a synchronous read memory (:
+   //this is what makes it a synchronous read memory
    assign rd_data_o = rd_data_r;
 
 endmodule
