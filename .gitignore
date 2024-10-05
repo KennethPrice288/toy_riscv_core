@@ -9,7 +9,7 @@ __pycache__/
 .venv/
 
 # Ignore build artifacts
-sim_build/
+*sim_build/
 sim.vvp
 testbench.vvp
 *.vcd
