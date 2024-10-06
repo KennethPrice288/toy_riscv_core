@@ -1,3 +1,7 @@
+`timescale 1ns/1ps
+
+import riscv_pkg::*;
+
 module instruction_decoder (
     input  logic [31:0] instruction_i,
     

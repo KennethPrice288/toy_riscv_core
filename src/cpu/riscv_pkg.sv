@@ -1,3 +1,4 @@
+`timescale 1ns/1ps
 `ifndef ALU_PKG_SV
 `define ALU_PKG_SV
 package riscv_pkg;
