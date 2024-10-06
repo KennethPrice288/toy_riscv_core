@@ -5,20 +5,32 @@ module program_counter #(
 ) (
     input logic clk_i,
     input logic rst_i,
-    input logic wr_en_i,
+    input logic take_branch_i,
     input logic stall_i,
-    input logic [width_p-1:0] wr_dat_i,
-    output logic [width_p-1:0] dat_o
+    input logic [width_p-1:0] branch_target_i,
+    output logic [width_p-1:0] pc_o
 );
+
+    logic [width_p-1:0] pc_n;
 
     always_ff @(posedge clk_i) begin
         if (rst_i) begin
-            dat_o <= '0;
-        end else if (wr_en_i) begin
-            dat_o <= wr_dat_i;
-        end else if (~stall_i) begin
-            dat_o <= dat_o + 4;
+            pc_o <= '0;
+        end else begin
+            pc_o <= pc_n;
         end
     end
+
+    always_comb begin
+        if (take_branch_i) begin
+        if (is_jalr_i) 
+            pc_n = alu_result & ~1; // JALR target from ALU, force even
+        else
+            pc_n = branch_target;   // Branch or JAL target
+        end else begin
+            pc_n = pc + 4;            // Normal increment
+        end
+    end
+  
 
 endmodule
