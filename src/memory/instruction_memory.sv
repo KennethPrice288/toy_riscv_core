@@ -1,13 +1,13 @@
 module instruction_memory
   #(parameter width_p = 32,
     parameter depth_p = 1024,  // This is now in words, but we'll address in bytes
-    parameter init_file = "")
+    parameter init_file_p = "")
   (input logic clk_i,
    input logic reset_i,
    
    // Read interface
-   input  logic [$clog2(depth_p*4)-1:0] pc_i,  // Byte-addressed PC
-   input logic stall_i //indicates this module should stall operation
+   input  logic [width_p-1:0] pc_i,  // Byte-addressed PC
+   input logic stall_i, //indicates this module should stall operation
    output logic [width_p-1:0] instruction_o,
    
    // Write interface (for loading instructions)
@@ -35,11 +35,11 @@ module instruction_memory
     .rd_data_o(instruction_o)
   );
 
-  // Initialize memory if init_file is provided
+  // Initialize memory if init_file_p is provided
   initial begin
-    if (init_file != "") begin
-      $readmemh(init_file, instruction_ram.mem);
-      $display("Initialized instruction memory from file: %s", init_file);
+    if (init_file_p != "") begin
+      $readmemh(init_file_p, instruction_ram.mem);
+      $display("Initialized instruction memory from file: %s", init_file_p);
       
       // Print out the first few memory locations
       for (int i = 0; i < 5; i++) begin

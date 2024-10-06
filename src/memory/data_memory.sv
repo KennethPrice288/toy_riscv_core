@@ -7,7 +7,7 @@ module data_memory
 (
  input  logic clk_i,
  input  logic reset_i,
- input  logic [$clog2(depth_p*4)-1:0] addr_i,
+ input  logic [width_p-1:0] addr_i,
  input  logic read_enable_i,
  input  logic write_enable_i,
  input  logic [width_p-1:0] write_data_i,

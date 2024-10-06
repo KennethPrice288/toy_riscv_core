@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
-`ifndef ALU_PKG_SV
-`define ALU_PKG_SV
+`ifndef RISCV_PKG_SV
+`define RISCV_PKG_SV
 package riscv_pkg;
     typedef enum logic [2:0] { 
         IMM_I,

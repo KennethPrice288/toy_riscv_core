@@ -1,6 +1,5 @@
 `timescale 1ps/1ps
 
-import alu_pkg::*;
 
 module alu
 #(parameter width_p = 32)(
@@ -10,8 +9,9 @@ module alu
     output logic [width_p - 1:0] result_o,
     output zero_o,
     output sign_o
-);
-
+    );
+    import alu_pkg::*;
+    
     always_comb begin
         unique case (alu_op_i)
             alu_pkg::ALU_ADD: result_o = d1_i + d2_i;

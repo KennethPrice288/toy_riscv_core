@@ -26,11 +26,11 @@ module program_counter #(
     always_comb begin
         if (take_branch_i) begin
         if (is_jalr_i) 
-            pc_n = alu_result & ~1; // JALR target from ALU, force even
+            pc_n = alu_result_i & ~1; // JALR target from ALU, force even
         else
             pc_n = branch_target_i;   // Branch or JAL target
         end else begin
-            pc_n = pc + 4;            // Normal increment
+            pc_n = pc_o + 4;            // Normal increment
         end
     end
   

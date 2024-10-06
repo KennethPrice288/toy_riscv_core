@@ -1,6 +1,6 @@
 `timescale 1ns/1ps
 
-import riscv_pkg::*;
+    import riscv_pkg::*;
 module branch_control (
     input logic             is_branch_i,
     input logic             is_jal_i,
@@ -10,7 +10,7 @@ module branch_control (
     input logic             negative_flag_i,
     input logic             overflow_flag_i,
     output logic            take_branch_o
-);
+    );
 
     logic signed_less_than_l;
     logic unsigned_less_than_l;

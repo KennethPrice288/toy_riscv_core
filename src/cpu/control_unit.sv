@@ -1,3 +1,4 @@
+`timescale 1ns/1ps
 import riscv_pkg::*;
 import alu_pkg::*;
 
@@ -18,9 +19,7 @@ module control_unit (
     output logic                        is_branch_o,
     output logic                        is_jal_o,
     output logic                        is_jalr_o
-);
-
-    import riscv_pkg::*;
+    );
 
     always_comb begin
         // Default values

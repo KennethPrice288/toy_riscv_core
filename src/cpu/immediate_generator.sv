@@ -6,8 +6,8 @@ module immediate_generator (
     input  logic [31:0] instruction_i,
     input  riscv_pkg::imm_type_e imm_type_i,
     output logic [31:0] immediate_o
-);
-
+    );
+    
 
     always_comb begin
         case (imm_type_i)

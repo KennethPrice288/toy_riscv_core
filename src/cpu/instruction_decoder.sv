@@ -1,7 +1,5 @@
 `timescale 1ns/1ps
 
-import riscv_pkg::*;
-
 module instruction_decoder (
     input  logic [31:0] instruction_i,
     
@@ -15,11 +13,12 @@ module instruction_decoder (
     
     // Instruction type
     output riscv_pkg::instruction_type_e inst_type_o,
-
+    
     // Immediate type
     output riscv_pkg::imm_type_e imm_type_o
-);
-
+    );
+    import riscv_pkg::*;
+    
     // Instruction fields
     assign opcode_o = instruction_i[6:0];
     assign rd_o     = instruction_i[11:7];
