@@ -12,7 +12,6 @@ module control_unit (
     output logic                        mem_to_reg_o,
     output logic                        mem_write_o,
     output logic                        mem_read_o,
-    output alu_pkg::alu_src_e           alu_src_o,
     output logic [3:0]                  mem_write_mask_o,
     
     // Signals for branch control
@@ -29,7 +28,6 @@ module control_unit (
         mem_to_reg_o = 1'b0;
         mem_write_o = 1'b0;
         mem_read_o = 1'b0;
-        alu_src_o = ALU_SRC_REG;
         is_branch_o = 1'b0;
         is_jal_o = 1'b0;
         is_jalr_o = 1'b0;
@@ -38,11 +36,9 @@ module control_unit (
         case (inst_type_i)
             R_TYPE: begin
                 reg_write_o = 1'b1;
-                alu_src_o = ALU_SRC_REG;
             end
             I_TYPE: begin
                 reg_write_o = 1'b1;
-                alu_src_o = ALU_SRC_IMM;
                 if (opcode_i == 7'b0000011) begin // Load
                     mem_read_o = 1'b1;
                     mem_to_reg_o = 1'b1;
@@ -52,7 +48,6 @@ module control_unit (
             end
             S_TYPE: begin
                 mem_write_o = 1'b1;
-                alu_src_o = ALU_SRC_IMM;
                 case (funct3_i)
                     3'b000: mem_write_mask_o = 4'b0001; // SB
                     3'b001: mem_write_mask_o = 4'b0011; // SH
@@ -62,16 +57,13 @@ module control_unit (
             end
             B_TYPE: begin
                 is_branch_o = 1'b1;
-                alu_src_o = ALU_SRC_REG;
             end
             U_TYPE: begin
                 reg_write_o = 1'b1;
-                alu_src_o = (opcode_i == 7'b0010111) ? ALU_SRC_PC : ALU_SRC_IMM; // AUIPC or LUI
             end
             J_TYPE: begin
                 is_jal_o = 1'b1;
                 reg_write_o = 1'b1;
-                alu_src_o = ALU_SRC_FOUR;
             end
             default: ; // Do nothing for UNKNOWN_TYPE
         endcase

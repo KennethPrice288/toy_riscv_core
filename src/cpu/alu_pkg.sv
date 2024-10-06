@@ -16,11 +16,12 @@ package alu_pkg;
     ALU_SRA  = 4'b1001
   } alu_op_e;
 
-  typedef enum logic[1:0] {
-    ALU_SRC_REG     = 2'b00,  // Register
-    ALU_SRC_IMM     = 2'b01,  // Immediate
-    ALU_SRC_PC      = 2'b10,  // PC (for AUIPC)
-    ALU_SRC_FOUR    = 2'b11   // Constant 4 (for JAL/JALR)
+  typedef enum logic[2:0] {
+    ALU_SRC_REG  = 3'b000,  // Register
+    ALU_SRC_PC   = 3'b001,  // PC
+    ALU_SRC_ZERO = 3'b010,  // Zero (for LUI)
+    ALU_SRC_IMM  = 3'b011,  // Immediate
+    ALU_SRC_FOUR = 3'b100   // Constant 4 (for JALR)
   } alu_src_e;
 
 endpackage
