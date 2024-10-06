@@ -1,3 +1,11 @@
+// test_program.hex
 00500093  // addi x1, x0, 5
-00600113  // addi x2, x0, 6
-002081b3  // add  x3, x1, x2
+00A00113  // addi x2, x0, 10
+002081B3  // add  x3, x1, x2
+40308233  // sub  x4, x1, x3
+0041A283  // lw   x5, 4(x3)
+0051A023  // sw   x5, 0(x3)
+00419463  // bne  x3, x4, 8
+00100513  // addi x10, x0, 1
+00000073  // ecall (terminate simulation)
+00200593  // addi x11, x0, 2
