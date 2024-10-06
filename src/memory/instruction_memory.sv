@@ -7,6 +7,7 @@ module instruction_memory
    
    // Read interface
    input  logic [$clog2(depth_p*4)-1:0] pc_i,  // Byte-addressed PC
+   input logic stall_i //indicates this module should stall operation
    output logic [width_p-1:0] instruction_o,
    
    // Write interface (for loading instructions)
@@ -29,7 +30,7 @@ module instruction_memory
     .wr_data_i(load_data_i),
     .wr_addr_i(load_addr_i[$clog2(depth_p*4)-1:2]),  // Convert byte address to word address
     
-    .rd_valid_i(1'b1),  // Always read
+    .rd_valid_i(~stall_i),  // Always read
     .rd_addr_i(word_addr),
     .rd_data_o(instruction_o)
   );
