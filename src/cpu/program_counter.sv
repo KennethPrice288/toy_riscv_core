@@ -8,6 +8,8 @@ module program_counter #(
     input logic take_branch_i,
     input logic stall_i,
     input logic [width_p-1:0] branch_target_i,
+    input logic is_jalr_i,
+    input logic [width_p-1:0] alu_result_i,
     output logic [width_p-1:0] pc_o
 );
 
@@ -26,7 +28,7 @@ module program_counter #(
         if (is_jalr_i) 
             pc_n = alu_result & ~1; // JALR target from ALU, force even
         else
-            pc_n = branch_target;   // Branch or JAL target
+            pc_n = branch_target_i;   // Branch or JAL target
         end else begin
             pc_n = pc + 4;            // Normal increment
         end
