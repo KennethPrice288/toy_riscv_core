@@ -14,25 +14,26 @@ async def test_program_counter(dut):
     await RisingEdge(dut.clk_i)
     dut.rst_i.value = 0
     await FallingEdge(dut.clk_i)
-    assert dut.dat_o.value == 0, f"PC not reset to 0, got {dut.dat_o.value}"
+    assert dut.pc_o.value == 0, f"PC not reset to 0, got {dut.pc_o.value}"
 
     # Normal increment
     for i in range(5):
         await RisingEdge(dut.clk_i)
         await FallingEdge(dut.clk_i)
-        assert dut.dat_o.value == (i + 1) * 4, f"PC not incremented correctly, expected {(i+1)*4}, got {dut.dat_o.value}"
+        assert dut.pc_o.value == (i + 1) * 4, f"PC not incremented correctly, expected {(i+1)*4}, got {dut.pc_o.value}"
 
     # Jump
-    dut.wr_en_i.value = 1
-    dut.wr_dat_i.value = 0x1000
+    dut.take_branch_i.value = 1
+    dut.branch_target_i.value = 0x1000
     await RisingEdge(dut.clk_i)
     await FallingEdge(dut.clk_i)
-    assert dut.dat_o.value == 0x1000, f"PC jump failed, expected 0x1000, got {hex(dut.dat_o.value)}"
+    assert dut.pc_o.value == 0x1000, f"PC jump failed, expected 0x1000, got {hex(dut.pc_o.value)}"
 
     # Ensure it continues to increment after jump
-    dut.wr_en_i.value = 0
+    dut.branch_target_i.value = 0
+    dut.take_branch_i.value = 0
     await RisingEdge(dut.clk_i)
     await FallingEdge(dut.clk_i)
-    assert dut.dat_o.value == 0x1004, f"PC not incrementing after jump, expected 0x1004, got {hex(dut.dat_o.value)}"
+    assert dut.pc_o.value == 0x1004, f"PC not incrementing after jump, expected 0x1004, got {hex(dut.pc_o.value)}"
 
     dut._log.info("Program Counter Test Passed!")
