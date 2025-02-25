@@ -20,9 +20,10 @@ module data_memory
 wire [$clog2(depth_p)-1:0] word_addr = addr_i[$clog2(depth_p*4)-1:2];
 
 // State machine and control signals
-typedef enum logic [1:0] {
+typedef enum logic [2:0] {
     IDLE,           // Ready for commands
     READ_FOR_WRITE, // Reading memory for masked write
+    READ,           // Simple read operations
     WAIT_READ,      // Wait for read data to be available
     WRITE_BACK      // Write merged data back to memory
 } state_t;
@@ -58,10 +59,16 @@ always_comb begin
                     busy_o = 1'b0;
                 end
             end else if (read_enable_i) begin
-                busy_o = 1'b0; // Simple read operation
+                next_state = READ;
+                ram_read_enable = 1'b1;
+                busy_o = 1'b1; // Simple read operation
             end
         end
-        
+        READ: begin
+            busy_o = 1'b0; 
+            ram_read_enable = 1'b1;
+            next_state = IDLE;
+        end
         READ_FOR_WRITE: begin
             // Wait one cycle for read data
             next_state = WAIT_READ;

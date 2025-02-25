@@ -38,6 +38,8 @@ async def test_extended_program(dut):
         11: 0,   # x11 should remain 0 (branch not taken)
     }
 
+    i = 0
+
     # Run until we hit the ecall (adjust cycle count if needed)
     while(True):
         await RisingEdge(dut.clk_i)
@@ -123,8 +125,7 @@ async def test_memory_operations(dut):
             addr = resolve_x(dut.alu_result)
             print(f"Load instruction: rs1={rs1_val}, imm={imm_val}, calculated addr={addr}")
             # Continue for one more cycle to capture the result
-            if (dut.stall):
-                await FallingEdge(dut.stall)
+            await RisingEdge(dut.clk_i)
             loaded_val = resolve_x(dut.reg_file.registers[resolve_x(dut.rd)].value)
             print(f"Loaded value into rd: {loaded_val}")
             break

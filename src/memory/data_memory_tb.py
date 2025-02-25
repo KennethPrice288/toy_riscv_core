@@ -30,6 +30,8 @@ async def read_data_from_memory(dut, addr):
     dut.read_enable_i.value = 1
     await RisingEdge(dut.clk_i)
     await FallingEdge(dut.clk_i)
+    while dut.busy_o.value:
+        await RisingEdge(dut.clk_i)
     data = resolve_x(dut.read_data_o.value)
     dut.read_enable_i.value = 0
     return data
@@ -53,6 +55,8 @@ async def test_full_word_write_read(dut):
 
     assert read_data == test_data, f"Full word write/read failed. Expected {test_data:08x}, got {read_data:08x}"
     cocotb.log.info("Simulation complete")
+    for _ in range(10):
+        await RisingEdge(dut.clk_i)
 
 @cocotb.test()
 async def test_byte_write_read(dut):
@@ -76,6 +80,8 @@ async def test_byte_write_read(dut):
 
     assert read_data == expected_data, f"Byte write/read failed. Expected {expected_data:08x}, got {read_data:08x}"
     cocotb.log.info("Simulation complete")
+    for _ in range(10):
+        await RisingEdge(dut.clk_i)
 
 @cocotb.test()
 async def test_halfword_write_read(dut):
@@ -99,3 +105,5 @@ async def test_halfword_write_read(dut):
 
     assert read_data == expected_data, f"Halfword write/read failed. Expected {expected_data:08x}, got {read_data:08x}"
     cocotb.log.info("Simulation complete")
+    for _ in range(10):
+        await RisingEdge(dut.clk_i)
