@@ -22,12 +22,27 @@ async def test_preloaded_instructions(dut):
     clock = Clock(dut.clk_i, 10, units="ns")
     cocotb.start_soon(clock.start())
 
+    dut.load_addr_i.value = 0
+    dut.load_data_i.value = 0
+    dut.load_enable_i.value = 0
+    dut.stall_i.value = 0
+
+
     await reset(dut)
 
     expected_instructions = [
-        0x00500093,  # addi x1, x0, 5
-        0x00600113,  # addi x2, x0, 6
-        0x002081b3,  # add  x3, x1, x2
+        0x00500093,
+        0x00a00113,
+        0x002081b3,
+        0x40308233,
+        0x00600293,
+        0x0051a223,
+        0x0041a283,
+        0x0051a023,
+        0x00419463,
+        0x00100513,
+        0x00000073,
+        0x00200593
     ]
 
     for i, expected_instr in enumerate(expected_instructions):
@@ -45,6 +60,11 @@ async def test_write_and_read(dut):
 
     clock = Clock(dut.clk_i, 10, units="ns")
     cocotb.start_soon(clock.start())
+
+    dut.load_addr_i.value = 0
+    dut.load_data_i.value = 0
+    dut.load_enable_i.value = 0
+    dut.stall_i.value = 0
 
     await reset(dut)
 

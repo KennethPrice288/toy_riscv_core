@@ -43,6 +43,10 @@ module alu_control (
                     alu_src1_o = ALU_SRC_PC;
                     alu_src2_o = ALU_SRC_FOUR;
                     alu_op_o = ALU_ADD;
+                end else if (opcode_i == OP_LOAD) begin
+                    alu_src1_o = ALU_SRC_REG;
+                    alu_src2_o = ALU_SRC_IMM;
+                    alu_op_o = ALU_ADD; // always use add for memory address calculation
                 end else begin
                     alu_src1_o = ALU_SRC_REG;
                     alu_src2_o = ALU_SRC_IMM;
@@ -70,7 +74,7 @@ module alu_control (
                 alu_op_o = ALU_SUB;
             end
             U_TYPE: begin
-                alu_src1_o = alu_src_e'((opcode_i == 7'b0010111) ? ALU_SRC_PC : ALU_SRC_ZERO); // AUIPC or LUI
+                alu_src1_o = alu_src_e'((opcode_i == OP_AUIPC) ? ALU_SRC_PC : ALU_SRC_ZERO); // AUIPC or LUI
                 alu_src2_o = ALU_SRC_IMM;
                 alu_op_o = ALU_ADD;
             end

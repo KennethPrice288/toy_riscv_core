@@ -22,6 +22,7 @@ def run_tests():
         proj_path / "src" / "cpu" / "branch_control.sv",
         proj_path / "src" / "cpu" / "immediate_generator.sv",
         proj_path / "src" / "cpu" / "program_counter.sv",
+        proj_path / "src" / "cpu" / "branch_target_generator.sv",
         proj_path / "src" / "cpu" / "riscv_core.sv",
     ]
 

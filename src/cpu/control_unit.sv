@@ -38,10 +38,10 @@ module control_unit (
             end
             I_TYPE: begin
                 reg_write_o = 1'b1;
-                if (opcode_i == 7'b0000011) begin // Load
+                if (opcode_i == OP_LOAD) begin // Load
                     mem_read_o = 1'b1;
                     mem_to_reg_o = 1'b1;
-                end else if (opcode_i == 7'b1100111) begin // JALR
+                end else if (opcode_i == OP_JALR) begin // JALR
                     is_jalr_o = 1'b1;
                 end
             end

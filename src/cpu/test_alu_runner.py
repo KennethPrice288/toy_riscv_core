@@ -19,6 +19,7 @@ def run_tests():
             verilog_sources=sources,
             hdl_toplevel="alu",
             build_args=[f"-I{proj_path}", "-g2012"],
+            build_dir="alu_sim_build"
         )
     else:  # verilator
         runner.build(

@@ -66,12 +66,6 @@ def run_tests():
             test_module="data_memory_tb",
             waves=True
         )
-        
-        # Check if VCD file was created
-        if vcd_file.exists():
-            print(f"VCD file created: {vcd_file}")
-        else:
-            print(f"VCD file not found at {vcd_file}")
 
     
 

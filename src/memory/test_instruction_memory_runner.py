@@ -25,7 +25,7 @@ def run_tests():
     common_parameters = {
         "width_p": 32,
         "depth_p": 1024,
-        "init_file": f'"{proj_path}/src/memory/test_program.hex"'
+        "init_file_p": f'"{proj_path}/src/memory/test_program.hex"'
     }
     
     if sim == "icarus":

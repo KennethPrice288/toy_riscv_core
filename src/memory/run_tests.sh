@@ -1,0 +1,2 @@
+pytest test_data_memory_runner.py
+pytest test_instruction_memory_runner.py

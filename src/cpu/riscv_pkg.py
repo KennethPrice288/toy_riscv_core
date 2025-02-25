@@ -7,7 +7,7 @@ class instruction_type_e(IntEnum):
     B_TYPE = 3
     U_TYPE = 4
     J_TYPE = 5
-    UNKNOWN_TYPE = 6
+    UNKNOWN_TYPE = 7
 
 class imm_type_e(IntEnum):
     IMM_I = 0
@@ -15,4 +15,4 @@ class imm_type_e(IntEnum):
     IMM_B = 2
     IMM_U = 3
     IMM_J = 4
-    IMM_NONE = 5
+    IMM_NONE = 7

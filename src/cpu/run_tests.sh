@@ -1,0 +1,5 @@
+pytest test_alu_runner.py
+pytest test_instruction_decoder_runner.py
+pytest test_program_counter_runner.py
+pytest test_register_file_runner.py
+pytest test_riscv_core_runner.py

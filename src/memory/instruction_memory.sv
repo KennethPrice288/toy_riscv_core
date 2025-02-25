@@ -42,7 +42,7 @@ module instruction_memory
       $display("Initialized instruction memory from file: %s", init_file_p);
       
       // Print out the first few memory locations
-      for (int i = 0; i < 5; i++) begin
+      for (int i = 0; i < 12; i++) begin
         $display("mem[%0d] = %h", i*4, instruction_ram.mem[i]);  // Note: i*4 for byte addressing
       end
     end

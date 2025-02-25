@@ -1,0 +1,1 @@
+rm -rf __pycache__ .pytest_cache alu_sim_build id_sim_build program_counter_sim_build rf_sim_build riscv_core_sim_build

@@ -36,7 +36,9 @@ module riscv_core #(
     logic alu_sign;
     instruction_type_e inst_type;
     imm_type_e imm_type;
+    logic data_mem_stall_lo;
     logic stall;
+
 
     // Decoded instruction fields
     logic [6:0] opcode;
@@ -44,22 +46,36 @@ module riscv_core #(
     logic [6:0] funct7;
     logic [4:0] rd, rs1, rs2;
 
+    logic [WIDTH-1:0] branch_target;
+
+    logic [WIDTH-1:0] next_instruction_address;
+    assign stall = data_mem_stall_lo || (opcode == OP_SYSTEM);
+    assign next_instruction_address = take_branch ? branch_target : pc;
+
+    branch_target_generator #(.width_p(WIDTH)) branch_tgt_gen (
+        .is_branch_i(is_branch),
+        .is_jal_i(is_jal),
+        .is_jalr_i(is_jalr),
+        .pc_i(pc),
+        .immediate_i(immediate),
+        .alu_result_i(alu_result),
+        .branch_target_o(branch_target)
+    );
+
     // Instantiate modules
     program_counter #(.width_p(WIDTH)) pc_inst (
         .clk_i(clk_i),
         .rst_i(rst_i),
         .take_branch_i(take_branch),
         .stall_i(stall),
-        .branch_target_i(alu_result),
-        .is_jalr_i(is_jalr),
-        .alu_result_i(alu_result),
+        .branch_target_i(branch_target),
         .pc_o(pc)
     );
 
     instruction_memory #(.width_p(WIDTH), .depth_p(MEM_DEPTH), .init_file_p(INIT_FILE)) instr_mem (
         .clk_i(clk_i),
         .reset_i(rst_i),
-        .pc_i(pc),
+        .pc_i(next_instruction_address),
         .stall_i(stall),
         .instruction_o(instruction),
         .load_enable_i(1'b0), // Not implementing instruction loading for now
@@ -171,7 +187,7 @@ module riscv_core #(
         .write_data_i(rs2_data),
         .write_mask_i(mem_write_mask),
         .read_data_o(data_mem_read_data),
-        .busy_o(stall) // We're not using this signal for now
+        .busy_o(data_mem_stall_lo)
     );
 
     // Write-back mux

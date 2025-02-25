@@ -1,11 +1,14 @@
 // test_program.hex
-00500093  // addi x1, x0, 5
-00A00113  // addi x2, x0, 10
-002081B3  // add  x3, x1, x2
-40308233  // sub  x4, x1, x3
-0041A283  // lw   x5, 4(x3)
-0051A023  // sw   x5, 0(x3)
-00419463  // bne  x3, x4, 8
-00100513  // addi x10, x0, 1
-00000073  // ecall (terminate simulation)
-00200593  // addi x11, x0, 2
+00500093  // addi x1, x0, 5        // Set x1 = 5
+00a00113  // addi x2, x0, 10       // Set x2 = 10
+002081b3  // add  x3, x1, x2       // Set x3 = 15 (5 + 10)
+40308233  // sub  x4, x1, x3       // Set x4 = -10 (5 - 15)
+00600293  // addi x5, x0, 6        // Set x5 = 6 
+0051a223  // sw   x5, 4(x3)        // Store 6 to memory[x3+4] (byte address 19, word address 4)
+0041a283  // lw   x5, 4(x3)        // Load from memory[19] into x5 (should be 6)
+0051a023  // sw   x5, 0(x3)        // Store x5 to memory[15] (word address 3)
+00419463  // bne  x3, x4, 8        // Branch if x3 != x4 (branch taken)
+00100513  // addi x10, x0, 1       // Set x10 = 1 (skipped if branch taken)
+00000073  // ecall                 // Program termination
+00200593  // addi x11, x0, 2       // Set x11 = 2 (never reached)
+
